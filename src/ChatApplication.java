@@ -1,9 +1,7 @@
 import java.io.*;
 import java.net.*;
 import java.security.MessageDigest;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.List;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -23,7 +21,7 @@ public class ChatApplication {
         try {
             MessageDigest sha = MessageDigest.getInstance("SHA-256");
             byte[] keyBytes = sha.digest(passphrase.getBytes(StandardCharsets.UTF_8));
-            keyBytes = truncateKey(keyBytes, 16); // Use only the first 16 bytes for 128-bit AES key
+            keyBytes = truncateKey(keyBytes, 16);
             return new SecretKeySpec(keyBytes, "AES");
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,8 +61,8 @@ public class ChatApplication {
     }
 
     public void start() throws IOException {
-        serverSocket = new ServerSocket(0); // Use port 0 to let the OS choose an available port
-        port = serverSocket.getLocalPort(); // Get the allocated port number
+        serverSocket = new ServerSocket(0);
+        port = serverSocket.getLocalPort();
         System.out.println("Node started on port " + port);
         new Thread(() -> acceptIncomingMessages()).start();
     }
@@ -110,14 +108,13 @@ public class ChatApplication {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Enter your username: ");
         String username = bufferedReader.readLine();
-        System.out.print("Enter the passphrase: ");
-        String passphrase = bufferedReader.readLine();
+        System.out.print("Enter the password: ");
+        String passkey = bufferedReader.readLine();
 
-        ChatApplication node = new ChatApplication(username, passphrase);
+        ChatApplication node = new ChatApplication(username, passkey);
         node.start();
 
         while (true) {
-            System.out.print("> ");
             String message = bufferedReader.readLine();
             if (message.equalsIgnoreCase("exit")) {
                 break;
