@@ -106,7 +106,7 @@ public class ChatApplication {
 
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Enter your username: ");
+        System.out.print("Enter username: ");
         String username = bufferedReader.readLine();
         System.out.print("Enter the password: ");
         String passkey = bufferedReader.readLine();
@@ -119,7 +119,7 @@ public class ChatApplication {
             if (message.equalsIgnoreCase("exit")) {
                 break;
             }
-            System.out.print("Enter destination port number: ");
+            System.out.print("Enter destination port: ");
             int destPort = Integer.parseInt(bufferedReader.readLine());
             node.sendMessage(destPort, message);
         }
